@@ -1,0 +1,54 @@
+DBMS Assignment 3
+22k-4042 Areeb Hussain
+-----------------
+
+Question 2:
+
+1. ----- List all columns from menu items where items unavailable and have price greater than 500 -----
+	Query: SELECT *
+	FROM MenuItem
+	WHERE isAvailable = 0 AND price > 500;
+
+2. ----- List all columns from menu items where category = Beverage with price greater than 300 or category = Desert ----
+	Query: SELECT *
+	FROM MenuItem
+	WHERE (category = 'Beverage' AND price > 300) OR category = 'Dessert';
+
+3. ----- Retrieve item name and price for all menu items which are in snack category and are currently available -----
+	Query: SELECT itemName, price
+	FROM MenuItem
+	WHERE category='Snack' AND isAvailable=1;
+
+4. ----- Retrieve item name and price for all menu items which are in snack category and are currently available but also divide price by 100 ----
+	Query: SELECT itemName, price/100 AS new_price
+	FROM MenuItem
+	WHERE category='Snack' AND isAvailable=1;
+
+5. ---- Retrieve supplier id of all suppliers who supply "Cappuccino" ----
+	Query: SELECT DISTINCT s.supplierID
+	FROM Supplies s
+	JOIN MenuItem m ON s.itemID = m.itemID
+	WHERE m.itemName = 'Cappuccino';
+
+6. ---- Retrieve employee name and café name for all employees whose residential city = their cafe city ----
+	Query: SELECT e.name, c.cafeName
+	FROM Employee e
+	JOIN Cafe c ON e.cafeID=c.cafeID
+	WHERE e.address = c.city;
+
+7. ---- List the employee IDs of all employees whose salary is not equal to 50,000 ----
+	Query: SELECT empID
+	FROM Employee
+	WHERE salary <> 50000;
+
+8. ---- List the supplier ID of all suppliers who exist in both 'Karachi' and 'Lahore' ----
+	Query: SELECT supplierID FROM Supplier WHERE city='Karachi'
+	INTERSECT
+	SELECT supplierID FROM Supplier WHERE city='Lahore';
+
+9. ---- List items that have never been supplied by any supplier ----
+	Query: SELECT itemName
+	FROM MenuItem
+	WHERE itemID NOT IN (
+    		SELECT itemID FROM Supplies
+	);
